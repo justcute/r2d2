@@ -1,6 +1,6 @@
 # R2D2
 
-[![CircleCI](https://circleci.com/gh/spreedly/r2d2.svg?style=svg)](https://circleci.com/gh/spreedly/r2d2)
+[![CircleCI](https://circleci.com/gh/evgeniy28/r2d2.svg?style=svg)](https://circleci.com/gh/evgeniy28/r2d2)
 
 R2D2 is a Ruby library for decrypting Google Pay and Android Pay payment tokens.
 
@@ -18,7 +18,7 @@ gem 'r2d2', git: 'https://github.com/spreedly/r2d2.git'
 
 ## Google Pay Usage
 
-For Google Pay, R2D2 requires the token values in the form of a JSON hash, your `recipient_id`, Google's `verification_keys` 
+For Google Pay, R2D2 requires the token values in the form of a JSON hash, your `recipient_id`, Google's `verification_keys`
 for the appropriate environment, and your private key.
 
 Example Google Pay token values:
@@ -31,17 +31,17 @@ Example Google Pay token values:
 }
 ```
 
-The `recipient_id` will be given to you by Google. Example: `merchant:12345678901234567890`. 
+The `recipient_id` will be given to you by Google. Example: `merchant:12345678901234567890`.
 
 The `verification_keys` must be fetched from Google's servers for the appropriate environment:
 - production: https://payments.developers.google.com/paymentmethodtoken/keys.json
 - test: https://payments.developers.google.com/paymentmethodtoken/test/keys.json
 
-It's a good idea to cache these keys for performance and resiliency. The `Cache-Control: max-age` directive must be 
-respected to expire the cache. To prevent decryption failures by expiring caches, it's recommended by Google's 
-[Tink](https://github.com/google/tink) reference library to pro-actively refresh the cache after half of the `max-age` 
+It's a good idea to cache these keys for performance and resiliency. The `Cache-Control: max-age` directive must be
+respected to expire the cache. To prevent decryption failures by expiring caches, it's recommended by Google's
+[Tink](https://github.com/google/tink) reference library to pro-actively refresh the cache after half of the `max-age`
 duration has passed.
- 
+
 The JSON must be parsed into a Ruby hash before being passed to R2D2. Example:
 
 ```ruby
@@ -49,7 +49,7 @@ The JSON must be parsed into a Ruby hash before being passed to R2D2. Example:
   "keys" =>
     [
       {
-        "keyValue" => "MFkwEwYHKoZIzj0CAQYIKoZIzj0DAQcDQgAEIsFro6K+IUxRr4yFTOTO+kFCCEvHo7B9IOMLxah6c977oFzX/beObH4a9OfosMHmft3JJZ6B3xpjIb8kduK4/A==", 
+        "keyValue" => "MFkwEwYHKoZIzj0CAQYIKoZIzj0DAQcDQgAEIsFro6K+IUxRr4yFTOTO+kFCCEvHo7B9IOMLxah6c977oFzX/beObH4a9OfosMHmft3JJZ6B3xpjIb8kduK4/A==",
         "protocolVersion" => "ECv1"
       }
     ]
@@ -69,7 +69,7 @@ JSON.parse(decrypted_json)
 # =>
 {
   "gatewayMerchantId" => "exampleGatewayMerchantId",
-  "messageExpiration" => "1528716120231", 
+  "messageExpiration" => "1528716120231",
   "messageId" => "AH2EjtcpVGS3JvxlTP5kUbx3h0Laa30uVKjB9CqmnYiw8gZ-tpsxIoOdTbAU_DtCbkLVUPzkFeeqSbU1vTbAIAE4LlPHJqBiMMF4hZ5KRafml3764_6lK7aH7cQkIma40CI-rtCWTLCk",
   "paymentMethod" => "CARD",
   "paymentMethodDetails" =>
