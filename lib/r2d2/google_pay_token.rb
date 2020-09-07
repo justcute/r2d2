@@ -93,7 +93,7 @@ module R2D2
     end
 
     def payload_signature_verified?
-      signed_string_message = [sender_id, ecv2_recipient_id, protocol_version, signed_message].map do |str|
+      signed_string_message = [sender_id, recipient_id, protocol_version, signed_message].map do |str|
         [str.length].pack('V') + str
       end.join
 
@@ -131,10 +131,6 @@ module R2D2
 
     def intermediate_signing_key_signed_key
       @intermediate_signing_key_signed_key ||= JSON.parse(intermediate_signing_key['signedKey'])
-    end
-
-    def ecv2_recipient_id
-      "merchant:#{recipient_id}"
     end
 
     def sender_id
