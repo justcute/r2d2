@@ -31,7 +31,7 @@ Example Google Pay token values:
 }
 ```
 
-The `recipient_id` will be given to you by Google. Example: `merchant:12345678901234567890`.
+The `recipient_id` will be given to you by Google. Example: `merchant:12345678901234567890` or `gateway:gateway_name`.
 
 The `verification_keys` must be fetched from Google's servers for the appropriate environment:
 - production: https://payments.developers.google.com/paymentmethodtoken/keys.json
