@@ -22,7 +22,7 @@ module R2D2
       shared_secret = generate_shared_secret(private_key, verified['ephemeralPublicKey'])
 
       hkdf_keys_length_bytes = protocol_version == 'ECv2' ? 32 : 16
-      hkdf_keys = derive_hkdf_keys(verified['ephemeralPublicKey'], shared_secret, 'Google', hkdf_keys_length_bytes)
+      hkdf_keys = derive_hkdf_keys(verified['ephemeralPublicKey'], shared_secret, sender_id, hkdf_keys_length_bytes)
       verify_mac(hkdf_keys[:mac_key], verified['encryptedMessage'], verified['tag'])
 
       cipher_key_length_bits = protocol_version == 'ECv2' ? 256 : 128

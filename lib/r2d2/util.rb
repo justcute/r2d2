@@ -4,7 +4,7 @@ module R2D2
   SignatureInvalidError = Class.new(R2D2::Error)
   MessageExpiredError = Class.new(R2D2::Error)
 
-  def build_token(token_attrs, recipient_id: nil, verification_keys: nil)
+  def build_token(token_attrs, recipient_id: nil, verification_keys: nil, token_provider: 'Google')
     protocol_version = token_attrs.fetch('protocolVersion', 'ECv0')
 
     case protocol_version
@@ -13,8 +13,10 @@ module R2D2
     when 'ECv1', 'ECv2'
       raise ArgumentError, "missing keyword: recipient_id" if recipient_id.nil?
       raise ArgumentError, "missing keyword: verification_keys" if verification_keys.nil?
+      raise ArgumentError, "unknown token_provider #{token_provider}" unless %w[Google Yandex].include? token_provider
 
-      GooglePayToken.new(token_attrs, recipient_id: recipient_id, verification_keys: verification_keys)
+      Object.const_get("R2D2::#{token_provider}PayToken")
+        .new(token_attrs, recipient_id: recipient_id, verification_keys: verification_keys)
     else
       raise ArgumentError, "unknown protocolVersion #{protocol_version}"
     end
